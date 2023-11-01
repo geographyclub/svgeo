@@ -1,6 +1,6 @@
 # svgeo
 
-Geographic files converted to svg format -- ready to use with any vector editing software.
+Geographic layers converted to svg format -- ready to use with any vector editing software.
 
 ## Downloads
 
