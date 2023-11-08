@@ -12,7 +12,14 @@ Geographic layers converted to svg format -- ready to use with any vector editin
 [ne_50m_geography_marine_polys.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_marine_polys.svg)  
 [ne_50m_geography_regions_polys.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_regions_polys.svg)  
 
-## Conversion
+## Editing
+
+Merging svg files.  
+```bash
+TODO
+```
+
+## Conversions
 
 Convert layer with name.  
 ```bash
