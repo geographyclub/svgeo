@@ -47,6 +47,30 @@ Geographic layers converted to svg format -- ready to use with any vector editin
 
 ### OGR
 
+Make intermediate geopackages if needed.  
+```bash
+file='/home/steve/maps/grids/hex1_ne_50m_land.gpkg'
+layer='hex1_ne_50m_land'
+for x in $(seq -180 40 180); do
+  for y in '-20'; do
+    proj='+proj=ortho +lat_0='"${y}"' +lon_0='"${x}"' +ellps=sphere'
+    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ${file} ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} ${layer}_${x}_${y}.gpkg /vsistdin/
+  done
+done
+```
+
+Convert globe from hex grid.  
+```bash
+layer1='hex1_ne_50m_admin_0_countries_lakes'
+height=540
+width=540
+
+ls ~/maps/cia/json/*.json | while read file; do
+  export filename=${file}; jq '.Geography."Geographic coordinates".text' ${file} | sed -e 's/"//g' -e 's/, / /g' -e 's/.*<\/strong>//' -e 's/<p>//g' | awk -F' ' '{ if ($1 == "null") { print "0 0 N 0 0 E"} else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($3 == "S") { print "-"$1" "$2" "$3" "$4" "$5" "$6 } else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($6 == "W") { print $1"."$2"\t-"$4"."$5"\t"ENVIRON["filename"] } else { print $1"."$2"\t"$4"."$5"\t"ENVIRON["filename"] } }' | sed -e 's/\/home\/steve\/maps\/cia\/json\///g' -e 's/.json//g' | while IFS=$'\t' read -a coordinates; do
+    proj='+proj=ortho +lat_0='"${coordinates[0]}"' +lon_0='"${coordinates[1]}"' +ellps=sphere'
+    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/grids/${layer}.gpkg ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} /vsistdout/ /vsistdin/
+```
+
 Convert layer with name.  
 ```bash
 file=natural_earth_vector.gpkg
@@ -108,27 +132,8 @@ ogrinfo -dialect sqlite -sql "SELECT ST_MinX(extent(geom)) || CAST(X'09' AS TEXT
 done
 ```
 
-
- Convert to ortho geopackage.  
+Convert multiple layers (no projection).  
 ```bash
-########################
-#
-# land
-#file='/home/steve/maps/grids/hex1_ne_50m_land.gpkg'
-#layer='hex1_ne_50m_land'
-#for x in $(seq -180 40 180); do
-#  for y in '-20'; do
-#    proj='+proj=ortho +lat_0='"${y}"' +lon_0='"${x}"' +ellps=sphere'
-#    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ${file} ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} ${layer}_${x}_${y}.gpkg /vsistdin/
-#  done
-#done
-#
-###########################
-```
-
-Convert multiple layers into one svg.  
-```bash
-# graticules + hex1
 layer1='hex1_ne_50m_land'
 layer2='ne_10m_graticules_1_split1'
 height=540
@@ -149,44 +154,36 @@ for x in $(seq -180 40 180); do
     done
   done
 done
-
-# graticules + boundary + coastline (by longitude)
-#for x in $(seq -180 40 180); do
-#  for y in '-20'; do
-#    ...
-#  done
-#done
 ```
 
-Convert multiple layers in one step.  
-```
-# boundary + coastline (by fips centroids)
+Convert multiple layers (with projection).  
+```bash
 layer1='ne_50m_admin_0_boundary_lines_land_split1'
 layer2='ne_50m_coastline_split1'
+layer3='ne_10m_graticules_1_split1'
 height=540
 width=540
 
 ls ~/maps/cia/json/*.json | while read file; do
   export filename=${file}; jq '.Geography."Geographic coordinates".text' ${file} | sed -e 's/"//g' -e 's/, / /g' -e 's/.*<\/strong>//' -e 's/<p>//g' | awk -F' ' '{ if ($1 == "null") { print "0 0 N 0 0 E"} else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($3 == "S") { print "-"$1" "$2" "$3" "$4" "$5" "$6 } else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($6 == "W") { print $1"."$2"\t-"$4"."$5"\t"ENVIRON["filename"] } else { print $1"."$2"\t"$4"."$5"\t"ENVIRON["filename"] } }' | sed -e 's/\/home\/steve\/maps\/cia\/json\///g' -e 's/.json//g' | while IFS=$'\t' read -a coordinates; do
     proj='+proj=ortho +lat_0='"${coordinates[0]}"' +lon_0='"${coordinates[1]}"' +ellps=sphere'
-    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer1}.gpkg ${layer1} | ogrinfo -dialect sqlite -sql "SELECT ST_MinX(extent(geometry)) || CAST(X'09' AS TEXT) || (-1 * ST_MaxY(extent(geometry))) || CAST(X'09' AS TEXT) || (ST_MaxX(extent(geometry)) - ST_MinX(extent(geometry))) || CAST(X'09' AS TEXT) || (ST_MaxY(extent(geometry)) - ST_MinY(extent(geometry))) FROM ${layer1}" /vsistdin?buffer_limit=-1 | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a extent; do
+    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/graticules/${layer3}.gpkg ${layer3} | ogrinfo -dialect sqlite -sql "SELECT ST_MinX(extent(geometry)) || CAST(X'09' AS TEXT) || (-1 * ST_MaxY(extent(geometry))) || CAST(X'09' AS TEXT) || (ST_MaxX(extent(geometry)) - ST_MinX(extent(geometry))) || CAST(X'09' AS TEXT) || (ST_MaxY(extent(geometry)) - ST_MinY(extent(geometry))) FROM ${layer3}" /vsistdin?buffer_limit=-1 | grep -v '^INFO' | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a extent; do
       echo '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="'${height}'" width="'${width}'" viewBox="'${extent[0]}' '${extent[1]}' '${extent[2]}' '${extent[3]}'">' > ${coordinates[2]}.svg
       proj='+proj=ortho +lat_0='"${coordinates[0]}"' +lon_0='"${coordinates[1]}"' +ellps=sphere'
 
       # layer 1
-      ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer1}.gpkg ${layer1} | ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geometry)) || ' ' || (-1 * ST_Y(StartPoint(geometry))) || 'L ' || ST_X(EndPoint(geometry)) || ' ' || (-1 * ST_Y(EndPoint(geometry))) FROM ${layer1} WHERE geometry NOT LIKE '%null%'" /vsistdin?buffer_limit=-1 | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
-        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.6px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${coordinates[2]}.svg
+      ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer1}.gpkg ${layer1} | ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geometry)) || ' ' || (-1 * ST_Y(StartPoint(geometry))) || 'L ' || ST_X(EndPoint(geometry)) || ' ' || (-1 * ST_Y(EndPoint(geometry))) FROM ${layer1} WHERE geometry NOT LIKE '%null%'" /vsistdin?buffer_limit=-1 | grep -v '^INFO' | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
+        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.3px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${coordinates[2]}.svg
       done
 
       # layer 2
-      ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer2}.gpkg ${layer2} | ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geometry)) || ' ' || (-1 * ST_Y(StartPoint(geometry))) || 'L ' || ST_X(EndPoint(geometry)) || ' ' || (-1 * ST_Y(EndPoint(geometry))) FROM ${layer2} WHERE geometry NOT LIKE '%null%'" /vsistdin?buffer_limit=-1 | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
-        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.6px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${coordinates[2]}.svg
+      ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer2}.gpkg ${layer2} | ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geometry)) || ' ' || (-1 * ST_Y(StartPoint(geometry))) || 'L ' || ST_X(EndPoint(geometry)) || ' ' || (-1 * ST_Y(EndPoint(geometry))) FROM ${layer2} WHERE geometry NOT LIKE '%null%'" /vsistdin?buffer_limit=-1 | grep -v '^INFO' | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
+        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.3px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${coordinates[2]}.svg
       done
       echo '</svg>' >> ${coordinates[2]}.svg
     done
   done  
 done  
-
 ```
 
 ### PSQL
