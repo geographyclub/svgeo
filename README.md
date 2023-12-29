@@ -119,7 +119,7 @@ done
 #for x in $(seq -180 40 180); do
 #  for y in '-20'; do
 #    proj='+proj=ortho +lat_0='"${y}"' +lon_0='"${x}"' +ellps=sphere'
-#    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ${file} ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0.1)) AS geom FROM ${layer}" -nln ${layer} ${layer}_${x}_${y}.gpkg /vsistdin/
+#    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ${file} ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} ${layer}_${x}_${y}.gpkg /vsistdin/
 #  done
 #done
 #
@@ -151,31 +151,11 @@ for x in $(seq -180 40 180); do
 done
 
 # graticules + boundary + coastline (by longitude)
-layer1='ne_50m_admin_0_boundary_lines_land_split1'
-layer2='ne_50m_coastline_split1'
-layer3='ne_10m_graticules_1_split1'
-height=540
-width=540
-for x in $(seq -180 40 180); do
-  for y in '-20'; do
-    ogrinfo -dialect sqlite -sql "SELECT ST_MinX(extent(geom)) || CAST(X'09' AS TEXT) || (-1 * ST_MaxY(extent(geom))) || CAST(X'09' AS TEXT) || (ST_MaxX(extent(geom)) - ST_MinX(extent(geom))) || CAST(X'09' AS TEXT) || (ST_MaxY(extent(geom)) - ST_MinY(extent(geom))) FROM ${layer3}" ${layer3}_-100_-20.gpkg | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
-      echo '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="'${height}'" width="'${width}'" viewBox="'${array[0]}' '${array[1]}' '${array[2]}' '${array[3]}'">' > ${layer1}_${x}_${y}.svg
-      # layer 1
-      ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geom)) || ' ' || (-1 * ST_Y(StartPoint(geom))) || 'L ' || ST_X(EndPoint(geom)) || ' ' || (-1 * ST_Y(EndPoint(geom))) FROM ${layer1} WHERE geom NOT LIKE '%null%'" ${layer1}_${x}_${y}.gpkg | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
-        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.6px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${layer1}_${x}_${y}.svg
-      done
-      # layer 2
-      ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geom)) || ' ' || (-1 * ST_Y(StartPoint(geom))) || 'L ' || ST_X(EndPoint(geom)) || ' ' || (-1 * ST_Y(EndPoint(geom))) FROM ${layer2} WHERE geom NOT LIKE '%null%'" ${layer2}_${x}_${y}.gpkg | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
-        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.6px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${layer1}_${x}_${y}.svg
-      done
-      # layer 3
-      ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geom)) || ' ' || (-1 * ST_Y(StartPoint(geom))) || 'L ' || ST_X(EndPoint(geom)) || ' ' || (-1 * ST_Y(EndPoint(geom))) FROM ${layer3} WHERE geom NOT LIKE '%null%' AND degrees LIKE '%0' OR degrees IN ('0')" ${layer3}_${x}_${y}.gpkg | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
-        echo '<path id="'${array[0]}'" d="'${array[1]}'" vector-effect="non-scaling-stroke" stroke="#000" stroke-width="0.2px" stroke-linejoin="round" stroke-linecap="round" fill="none"></path>' >> ${layer1}_${x}_${y}.svg
-      done
-      echo '</svg>' >> ${layer1}_${x}_${y}.svg
-    done
-  done
-done
+#for x in $(seq -180 40 180); do
+#  for y in '-20'; do
+#    ...
+#  done
+#done
 ```
 
 Convert multiple layers in one step.  
@@ -188,10 +168,10 @@ width=540
 
 ls ~/maps/cia/json/*.json | while read file; do
   export filename=${file}; jq '.Geography."Geographic coordinates".text' ${file} | sed -e 's/"//g' -e 's/, / /g' -e 's/.*<\/strong>//' -e 's/<p>//g' | awk -F' ' '{ if ($1 == "null") { print "0 0 N 0 0 E"} else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($3 == "S") { print "-"$1" "$2" "$3" "$4" "$5" "$6 } else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($6 == "W") { print $1"."$2"\t-"$4"."$5"\t"ENVIRON["filename"] } else { print $1"."$2"\t"$4"."$5"\t"ENVIRON["filename"] } }' | sed -e 's/\/home\/steve\/maps\/cia\/json\///g' -e 's/.json//g' | while IFS=$'\t' read -a coordinates; do
-    proj='+proj=ortho +lat_0=20 +lon_0=20 +ellps=sphere'
+    proj='+proj=ortho +lat_0='"${coordinates[0]}"' +lon_0='"${coordinates[1]}"' +ellps=sphere'
     ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer1}.gpkg ${layer1} | ogrinfo -dialect sqlite -sql "SELECT ST_MinX(extent(geometry)) || CAST(X'09' AS TEXT) || (-1 * ST_MaxY(extent(geometry))) || CAST(X'09' AS TEXT) || (ST_MaxX(extent(geometry)) - ST_MinX(extent(geometry))) || CAST(X'09' AS TEXT) || (ST_MaxY(extent(geometry)) - ST_MinY(extent(geometry))) FROM ${layer1}" /vsistdin?buffer_limit=-1 | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a extent; do
       echo '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="'${height}'" width="'${width}'" viewBox="'${extent[0]}' '${extent[1]}' '${extent[2]}' '${extent[3]}'">' > ${coordinates[2]}.svg
-      proj='+proj=ortho +lat_0='"${coordinates[1]}"' +lon_0='"${coordinates[0]}"' +ellps=sphere'
+      proj='+proj=ortho +lat_0='"${coordinates[0]}"' +lon_0='"${coordinates[1]}"' +ellps=sphere'
 
       # layer 1
       ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/naturalearth/packages/misc/${layer1}.gpkg ${layer1} | ogrinfo -dialect sqlite -sql "SELECT fid || CAST(X'09' AS TEXT) || 'M ' || ST_X(StartPoint(geometry)) || ' ' || (-1 * ST_Y(StartPoint(geometry))) || 'L ' || ST_X(EndPoint(geometry)) || ' ' || (-1 * ST_Y(EndPoint(geometry))) FROM ${layer1} WHERE geometry NOT LIKE '%null%'" /vsistdin?buffer_limit=-1 | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
