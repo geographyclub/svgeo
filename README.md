@@ -6,44 +6,44 @@ Geographic layers converted to svg format -- ready to use with any vector editin
 
 <details>
 <summary>Natural Earth</summary>
-[ne_10m_populated_places.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_10m_populated_places.svg)  
-[ne_10m_roads.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_10m_roads.svg)  
-[ne_50m_admin_0_countries_lakes.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_admin_0_countries_lakes.svg)  
-[ne_50m_admin_0_map_subunits.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_admin_0_map_subunits.svg)  
-[ne_50m_geography_marine_polys.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_marine_polys.svg)  
-[ne_50m_geography_regions_polys.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_regions_polys.svg)  
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_10m_populated_places.svg">ne_10m_populated_places.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_10m_roads.svg">ne_10m_roads.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_admin_0_countries_lakes.svg">ne_50m_admin_0_countries_lakes.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_admin_0_map_subunits.svg">ne_50m_admin_0_map_subunits.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_marine_polys.svg">ne_50m_geography_marine_polys.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_regions_polys.svg">ne_50m_geography_regions_polys.svg</a>
 </details>
 
 <details>
 <summary>WWF</summary>
-[wwf_terr_ecos_Asia.svg](https://github.com/geographyclub/svgeo/tree/main/svg/wwf_terr_ecos_Asia.svg)
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/wwf_terr_ecos_Asia.svg">wwf_terr_ecos_Asia.svg</a>
 </details>
 
 <details>
 <summary>Globes</summary>
-[ne_50m_land_-100_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-100_-20.svg)
-[ne_50m_land_100_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_100_-20.svg)
-[ne_50m_land_-140_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-140_-20.svg)
-[ne_50m_land_140_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_140_-20.svg)
-[ne_50m_land_-180_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-180_-20.svg)
-[ne_50m_land_180_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_180_-20.svg)
-[ne_50m_land_-20_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-20_-20.svg)
-[ne_50m_land_20_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_20_-20.svg)
-[ne_50m_land_-60_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-60_-20.svg)
-[ne_50m_land_60_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_60_-20.svg)
-[ne_50m_coastline_-100_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-100_-20.svg)
-[ne_50m_coastline_100_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_100_-20.svg)
-[ne_50m_coastline_-140_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-140_-20.svg)
-[ne_50m_coastline_140_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_140_-20.svg)
-[ne_50m_coastline_-180_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-180_-20.svg)
-[ne_50m_coastline_180_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_180_-20.svg)
-[ne_50m_coastline_-20_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-20_-20.svg)
-[ne_50m_coastline_20_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_20_-20.svg)
-[ne_50m_coastline_-60_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-60_-20.svg)
-[ne_50m_coastline_60_-20.svg](https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_60_-20.svg)
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-100_-20.svg">ne_50m_land_-100_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_100_-20.svg">ne_50m_land_100_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-140_-20.svg">ne_50m_land_-140_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_140_-20.svg">ne_50m_land_140_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-180_-20.svg">ne_50m_land_-180_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_180_-20.svg">ne_50m_land_180_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-20_-20.svg">ne_50m_land_-20_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_20_-20.svg">ne_50m_land_20_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-60_-20.svg">ne_50m_land_-60_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_60_-20.svg">ne_50m_land_60_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-100_-20.svg">ne_50m_coastline_-100_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_100_-20.svg">ne_50m_coastline_100_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-140_-20.svg">ne_50m_coastline_-140_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_140_-20.svg">ne_50m_coastline_140_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-180_-20.svg">ne_50m_coastline_-180_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_180_-20.svg">ne_50m_coastline_180_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-20_-20.svg">ne_50m_coastline_-20_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_20_-20.svg">ne_50m_coastline_20_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-60_-20.svg">ne_50m_coastline_-60_-20.svg</a>
+<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_60_-20.svg">ne_50m_coastline_60_-20.svg</a>
 </details>
 
-## Conversions
+## How to convert
 
 ### OGR
 
@@ -57,18 +57,6 @@ for x in $(seq -180 40 180); do
     ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ${file} ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} ${layer}_${x}_${y}.gpkg /vsistdin/
   done
 done
-```
-
-Convert globe from hex grid.  
-```bash
-layer1='hex1_ne_50m_admin_0_countries_lakes'
-height=540
-width=540
-
-ls ~/maps/cia/json/*.json | while read file; do
-  export filename=${file}; jq '.Geography."Geographic coordinates".text' ${file} | sed -e 's/"//g' -e 's/, / /g' -e 's/.*<\/strong>//' -e 's/<p>//g' | awk -F' ' '{ if ($1 == "null") { print "0 0 N 0 0 E"} else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($3 == "S") { print "-"$1" "$2" "$3" "$4" "$5" "$6 } else { print $1" "$2" "$3" "$4" "$5" "$6 } }' | awk -F' ' '{ if ($6 == "W") { print $1"."$2"\t-"$4"."$5"\t"ENVIRON["filename"] } else { print $1"."$2"\t"$4"."$5"\t"ENVIRON["filename"] } }' | sed -e 's/\/home\/steve\/maps\/cia\/json\///g' -e 's/.json//g' | while IFS=$'\t' read -a coordinates; do
-    proj='+proj=ortho +lat_0='"${coordinates[0]}"' +lon_0='"${coordinates[1]}"' +ellps=sphere'
-    ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ~/maps/grids/${layer}.gpkg ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} /vsistdout/ /vsistdin/
 ```
 
 Convert layer with name.  
