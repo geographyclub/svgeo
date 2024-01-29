@@ -43,7 +43,7 @@ Geographic layers converted to svg format -- ready to use with any vector editin
 <a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_60_-20.svg">ne_50m_coastline_60_-20.svg</a><br>
 </details>
 
-## How to convert
+## How to do it yourself
 
 ### OGR
 
