@@ -205,3 +205,10 @@ psql -d world -c "COPY (SELECT ST_XMin(ST_Extent(geom)), (-1 * ST_YMax(ST_Extent
   echo '</svg>' >> ${layer}_${continent// /}.svg
 done
 ```
+
+## Usage
+
+```bash
+# rotating globe gif
+convert $(ls ne_50m_coastline*.svg) ne_50m_coastline.gif
+```
