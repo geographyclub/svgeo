@@ -51,7 +51,7 @@ Make intermediate geopackages if needed.
 ```bash
 file='/home/steve/maps/grids/hex1_ne_50m_land.gpkg'
 layer='hex1_ne_50m_land'
-for x in $(seq -180 40 180); do
+for x in $(seq -180 40 140); do
   for y in '-20'; do
     proj='+proj=ortho +lat_0='"${y}"' +lon_0='"${x}"' +ellps=sphere'
     ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -s_srs 'epsg:4326' -t_srs "${proj}" -f 'GeoJSON' /vsistdout/ ${file} ${layer} | ogr2ogr -overwrite -skipfailures --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE -dialect 'SQLite' -sql "SELECT ST_Union(ST_Buffer(geometry,0)) AS geom FROM ${layer}" -nln ${layer} ${layer}_${x}_${y}.gpkg /vsistdin/
@@ -126,7 +126,7 @@ layer1='hex1_ne_50m_land'
 layer2='ne_10m_graticules_1_split1'
 height=540
 width=540
-for x in $(seq -180 40 180); do
+for x in $(seq -180 40 140); do
   for y in '-20'; do
     ogrinfo -dialect sqlite -sql "SELECT ST_MinX(extent(geom)) || CAST(X'09' AS TEXT) || (-1 * ST_MaxY(extent(geom))) || CAST(X'09' AS TEXT) || (ST_MaxX(extent(geom)) - ST_MinX(extent(geom))) || CAST(X'09' AS TEXT) || (ST_MaxY(extent(geom)) - ST_MinY(extent(geom))) FROM ${layer1}" ${layer1}_-100_-20.gpkg | grep -e '=' | sed -e 's/^.*://g' -e 's/^.* = //g' | while IFS=$'\t' read -a array; do
       echo '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="'${height}'" width="'${width}'" viewBox="'${array[0]}' '${array[1]}' '${array[2]}' '${array[3]}'">' > ${layer1}_${x}_${y}.svg
