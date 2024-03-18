@@ -1,49 +1,22 @@
 # svgeo
 
-Geographic layers converted to svg format -- ready to use with any vector editing software.
+Library of readymade maps in svg format for designers and developers.
 
 ## Downloads
 
-<details>
-<summary>Natural Earth</summary>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_10m_populated_places.svg">ne_10m_populated_places.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_10m_roads.svg">ne_10m_roads.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_admin_0_countries_lakes.svg">ne_50m_admin_0_countries_lakes.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_admin_0_map_subunits.svg">ne_50m_admin_0_map_subunits.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_marine_polys.svg">ne_50m_geography_marine_polys.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ne_50m_geography_regions_polys.svg">ne_50m_geography_regions_polys.svg</a><br>
-</details>
+[svg](https://github.com/geographyclub/svgeo/tree/main/svg)  
 
-<details>
-<summary>WWF</summary>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/wwf_terr_ecos_Asia.svg">wwf_terr_ecos_Asia.svg</a><br>
-</details>
+## How I make the website
 
-<details>
-<summary>Globes</summary>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-100_-20.svg">ne_50m_land_-100_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_100_-20.svg">ne_50m_land_100_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-140_-20.svg">ne_50m_land_-140_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_140_-20.svg">ne_50m_land_140_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-180_-20.svg">ne_50m_land_-180_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_180_-20.svg">ne_50m_land_180_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-20_-20.svg">ne_50m_land_-20_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_20_-20.svg">ne_50m_land_20_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_-60_-20.svg">ne_50m_land_-60_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_land_60_-20.svg">ne_50m_land_60_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-100_-20.svg">ne_50m_coastline_-100_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_100_-20.svg">ne_50m_coastline_100_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-140_-20.svg">ne_50m_coastline_-140_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_140_-20.svg">ne_50m_coastline_140_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-180_-20.svg">ne_50m_coastline_-180_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_180_-20.svg">ne_50m_coastline_180_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-20_-20.svg">ne_50m_coastline_-20_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_20_-20.svg">ne_50m_coastline_20_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_-60_-20.svg">ne_50m_coastline_-60_-20.svg</a><br>
-<a href="https://github.com/geographyclub/svgeo/tree/main/svg/ortho/ne_50m_coastline_60_-20.svg">ne_50m_coastline_60_-20.svg</a><br>
-</details>
+Make thumbnail images.  
+```bash
+dir='svg/naturalearth/'
+ls ${dir}/*.svg | while read file; do
+  convert -background none -geometry +0+0 -resize 90x ${file} ${file%.*}.png
+done
+```
 
-## How to do it yourself
+## How I make vectors
 
 ### OGR
 

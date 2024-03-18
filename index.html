@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,600,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,600,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>svgeo</title>
+</head>
+<body>
+
+<header class="color-gradient">
+  <div><a href="#">🌎</a></div>
+  <div class="menu-icon">&#9776;</div>
+  <nav>
+    <a href="#" onclick="closeMenu()">Home</a>
+    <a href="#" onclick="scrollToSection('about');">About</a>
+    <a href="#" onclick="scrollToSection('contact');">Contact</a>
+    <p>GITHUB</p>
+    <a href="https://github.com/geographyclub/factbook" target="_blank">Code repository</a>
+    <a href="https://github.com/factbook/factbook.json" target="_blank">JSON files</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="flex-container" style="margin-bottom:20px;">
+    <div class="flex-column-wide color-gradient" style="padding:30px 0">
+      <h1 style="font-size:20px; line-height:0.8; letter-spacing:-1px;">
+        <span style="font-size:60px; line-height:0.2">10</span><br>Random<br>Facts From The<br>
+        <a href="https://www.cia.gov/the-world-factbook/" target="_blank" style="color:#fff;">CIA World Factbook</a>
+      </h1>
+    </div>
+  </div>
+  <div class="flex-container" id="resultContainer"></div>
+
+<div class="flex-container">
+<div class="flex-column-wide footer color-gradient">
+<p id="about">ABOUT</p>
+<h2><span style="">Web developer</span> and <span style="">map maker</span> with a background in Geography and English.</h2>
+<p id="contact">EMAIL</p>
+<a href="mailto:emailstevekim@gmail.com"><h2>emailstevekim@gmail.com</h2></a>
+<p>TWITTER</p>
+<a href="https://twitter.com/newgeographer2" target="_blank"><h2>@newgeographer2</h2></a>
+<p>GITHUB</p>
+<a href="https://github.com/geographyclub" target="_blank"><h2>geographyclub</h2></a>
+<p>WEBSITES</p>
+<a href="https://geographyclub.github.io/factbook/" onclick="closeMenu()" target="_blank"><h3>World Factbook Scraper</h3></a>
+<a href="https://geographyclub.github.io/american-geography/" onclick="closeMenu()" target="_blank"><h3>American Geography</h3></a>
+<a href="https://geographyclub.github.io/asean/" onclick="closeMenu()" target="_blank"><h3>Asean Primer</h3></a>
+</div>
+</div>
+
+</div>
+
+<script>
+const files = ["africa/ag.json","africa/ao.json","africa/bc.json","africa/bn.json","africa/by.json","africa/cd.json","africa/cf.json","africa/cg.json","africa/cm.json","africa/cn.json","africa/ct.json","africa/cv.json","africa/dj.json","africa/eg.json","africa/ek.json","africa/er.json","africa/et.json","africa/ga.json","africa/gb.json","africa/gh.json","africa/gv.json","africa/iv.json","africa/ke.json","africa/li.json","africa/lt.json","africa/ly.json","africa/ma.json","africa/mi.json","africa/ml.json","africa/mo.json","africa/mp.json","africa/mr.json","africa/mz.json","africa/ng.json","africa/ni.json","africa/od.json","africa/pu.json","africa/rw.json","africa/se.json","africa/sf.json","africa/sg.json","africa/sh.json","africa/sl.json","africa/so.json","africa/su.json","africa/to.json","africa/tp.json","africa/ts.json","africa/tz.json","africa/ug.json","africa/uv.json","africa/wa.json","africa/wi.json","africa/wz.json","africa/za.json","africa/zi.json","antarctica/ay.json","antarctica/bv.json","antarctica/fs.json","antarctica/hm.json","australia-oceania/aq.json","australia-oceania/as.json","australia-oceania/at.json","australia-oceania/bp.json","australia-oceania/ck.json","australia-oceania/cq.json","australia-oceania/cr.json","australia-oceania/cw.json","australia-oceania/fj.json","australia-oceania/fm.json","australia-oceania/fp.json","australia-oceania/gq.json","australia-oceania/kr.json","australia-oceania/kt.json","australia-oceania/nc.json","australia-oceania/ne.json","australia-oceania/nf.json","australia-oceania/nh.json","australia-oceania/nr.json","australia-oceania/nz.json","australia-oceania/pc.json","australia-oceania/ps.json","australia-oceania/rm.json","australia-oceania/tl.json","australia-oceania/tn.json","australia-oceania/tv.json","australia-oceania/um.json","australia-oceania/wf.json","australia-oceania/wq.json","australia-oceania/ws.json","central-america-n-caribbean/aa.json","central-america-n-caribbean/ac.json","central-america-n-caribbean/av.json","central-america-n-caribbean/bb.json","central-america-n-caribbean/bf.json","central-america-n-caribbean/bh.json","central-america-n-caribbean/bq.json","central-america-n-caribbean/cj.json","central-america-n-caribbean/cs.json","central-america-n-caribbean/cu.json","central-america-n-caribbean/do.json","central-america-n-caribbean/dr.json","central-america-n-caribbean/es.json","central-america-n-caribbean/gj.json","central-america-n-caribbean/gt.json","central-america-n-caribbean/ha.json","central-america-n-caribbean/ho.json","central-america-n-caribbean/jm.json","central-america-n-caribbean/mh.json","central-america-n-caribbean/nn.json","central-america-n-caribbean/nu.json","central-america-n-caribbean/pm.json","central-america-n-caribbean/rn.json","central-america-n-caribbean/rq.json","central-america-n-caribbean/sc.json","central-america-n-caribbean/st.json","central-america-n-caribbean/tb.json","central-america-n-caribbean/td.json","central-america-n-caribbean/tk.json","central-america-n-caribbean/uc.json","central-america-n-caribbean/vc.json","central-america-n-caribbean/vi.json","central-america-n-caribbean/vq.json","central-asia/kg.json","central-asia/kz.json","central-asia/rs.json","central-asia/ti.json","central-asia/tx.json","central-asia/uz.json","east-n-southeast-asia/bm.json","east-n-southeast-asia/bx.json","east-n-southeast-asia/cb.json","east-n-southeast-asia/ch.json","east-n-southeast-asia/hk.json","east-n-southeast-asia/id.json","east-n-southeast-asia/ja.json","east-n-southeast-asia/kn.json","east-n-southeast-asia/ks.json","east-n-southeast-asia/la.json","east-n-southeast-asia/mc.json","east-n-southeast-asia/mg.json","east-n-southeast-asia/my.json","east-n-southeast-asia/pf.json","east-n-southeast-asia/pg.json","east-n-southeast-asia/pp.json","east-n-southeast-asia/rp.json","east-n-southeast-asia/sn.json","east-n-southeast-asia/th.json","east-n-southeast-asia/tt.json","east-n-southeast-asia/tw.json","east-n-southeast-asia/vm.json","europe/al.json","europe/an.json","europe/au.json","europe/ax.json","europe/be.json","europe/bk.json","europe/bo.json","europe/bu.json","europe/cy.json","europe/da.json","europe/dx.json","europe/ee.json","europe/ei.json","europe/en.json","europe/ez.json","europe/fi.json","europe/fo.json","europe/fr.json","europe/gi.json","europe/gk.json","europe/gm.json","europe/gr.json","europe/hr.json","europe/hu.json","europe/ic.json","europe/im.json","europe/it.json","europe/je.json","europe/jn.json","europe/kv.json","europe/lg.json","europe/lh.json","europe/lo.json","europe/ls.json","europe/lu.json","europe/md.json","europe/mj.json","europe/mk.json","europe/mn.json","europe/mt.json","europe/nl.json","europe/no.json","europe/pl.json","europe/po.json","europe/ri.json","europe/ro.json","europe/si.json","europe/sm.json","europe/sp.json","europe/sv.json","europe/sw.json","europe/sz.json","europe/uk.json","europe/up.json","europe/vt.json","middle-east/ae.json","middle-east/aj.json","middle-east/am.json","middle-east/ba.json","middle-east/gg.json","middle-east/gz.json","middle-east/ir.json","middle-east/is.json","middle-east/iz.json","middle-east/jo.json","middle-east/ku.json","middle-east/le.json","middle-east/mu.json","middle-east/qa.json","middle-east/sa.json","middle-east/sy.json","middle-east/tu.json","middle-east/we.json","middle-east/ym.json","north-america/bd.json","north-america/ca.json","north-america/gl.json","north-america/ip.json","north-america/mx.json","north-america/sb.json","north-america/us.json","oceans/oo.json","oceans/xo.json","oceans/xq.json","oceans/zh.json","oceans/zn.json","south-america/ar.json","south-america/bl.json","south-america/br.json","south-america/ci.json","south-america/co.json","south-america/ec.json","south-america/fk.json","south-america/gy.json","south-america/ns.json","south-america/pa.json","south-america/pe.json","south-america/sx.json","south-america/uy.json","south-america/ve.json","south-asia/af.json","south-asia/bg.json","south-asia/bt.json","south-asia/ce.json","south-asia/in.json","south-asia/io.json","south-asia/mv.json","south-asia/np.json","south-asia/pk.json","world/xx.json"]
+const codes = {"Afghanistan":"AF","Aland Islands":"\N","Albania":"AL","Algeria":"AG","American Samoa":"AQ","Andorra":"AN","Angola":"AO","Anguilla":"AV","Antarctica":"AY","Antigua and Barbuda":"AC","Argentina":"AR","Armenia":"AM","Aruba":"AA","Australia":"AS","Austria":"AU","Azerbaijan":"AJ","Bahamas":"BF","Bahrain":"BA","Bangladesh":"BG","Barbados":"BB","Belarus":"BO","Belgium":"BE","Belize":"BH","Benin":"BN","Bermuda":"BD","Bhutan":"BT","Bolivia":"BL","Bonaire, Saint Eustatius and Saba ":"\N","Bosnia and Herzegovina":"BK","Botswana":"BC","Bouvet Island":"BV","Brazil":"BR","British Indian Ocean Territory":"IO","British Virgin Islands":"VI","Brunei":"BX","Bulgaria":"BU","Burkina Faso":"UV","Burundi":"BY","Cabo Verde":"CV","Cambodia":"CB","Cameroon":"CM","Canada":"CA","Cayman Islands":"CJ","Central African Republic":"CT","Chad":"CD","Chile":"CI","China":"CH","Christmas Island":"KT","Cocos Islands":"CK","Colombia":"CO","Comoros":"CN","Cook Islands":"CW","Costa Rica":"CS","Croatia":"HR","Cuba":"CU","Curacao":"UC","Cyprus":"CY","Czechia":"EZ","Democratic Republic of the Congo":"CG","Denmark":"DA","Djibouti":"DJ","Dominica":"DO","Dominican Republic":"DR","Ecuador":"EC","Egypt":"EG","El Salvador":"ES","Equatorial Guinea":"EK","Eritrea":"ER","Estonia":"EN","Eswatini":"WZ","Ethiopia":"ET","Falkland Islands":"FK","Faroe Islands":"FO","Fiji":"FJ","Finland":"FI","France":"FR","French Guiana":"FG","French Polynesia":"FP","French Southern Territories":"FS","Gabon":"GB","Gambia":"GA","Georgia":"GG","Germany":"GM","Ghana":"GH","Gibraltar":"GI","Greece":"GR","Greenland":"GL","Grenada":"GJ","Guadeloupe":"GP","Guam":"GQ","Guatemala":"GT","Guernsey":"GK","Guinea":"GV","Guinea-Bissau":"PU","Guyana":"GY","Haiti":"HA","Heard Island and McDonald Islands":"HM","Honduras":"HO","Hong Kong":"HK","Hungary":"HU","Iceland":"IC","India":"IN","Indonesia":"ID","Iran":"IR","Iraq":"IZ","Ireland":"EI","Isle of Man":"IM","Israel":"IS","Italy":"IT","Ivory Coast":"IV","Jamaica":"JM","Japan":"JA","Jersey":"JE","Jordan":"JO","Kazakhstan":"KZ","Kenya":"KE","Kiribati":"KR","Kosovo":"KV","Kuwait":"KU","Kyrgyzstan":"KG","Laos":"LA","Latvia":"LG","Lebanon":"LE","Lesotho":"LT","Liberia":"LI","Libya":"LY","Liechtenstein":"LS","Lithuania":"LH","Luxembourg":"LU","Macao":"MC","Madagascar":"MA","Malawi":"MI","Malaysia":"MY","Maldives":"MV","Mali":"ML","Malta":"MT","Marshall Islands":"RM","Martinique":"MB","Mauritania":"MR","Mauritius":"MP","Mayotte":"MF","Mexico":"MX","Micronesia":"FM","Moldova":"MD","Monaco":"MN","Mongolia":"MG","Montenegro":"MJ","Montserrat":"MH","Morocco":"MO","Mozambique":"MZ","Myanmar":"BM","Namibia":"WA","Nauru":"NR","Nepal":"NP","Netherlands Antilles":"NT","New Caledonia":"NC","New Zealand":"NZ","Nicaragua":"NU","Niger":"NG","Nigeria":"NI","Niue":"NE","Norfolk Island":"NF","Northern Mariana Islands":"CQ","North Korea":"KN","North Macedonia":"MK","Norway":"NO","Oman":"MU","Pakistan":"PK","Palau":"PS","Palestinian Territory":"WE","Panama":"PM","Papua New Guinea":"PP","Paraguay":"PA","Peru":"PE","Philippines":"RP","Pitcairn":"PC","Poland":"PL","Portugal":"PO","Puerto Rico":"RQ","Qatar":"QA","Republic of the Congo":"CF","Reunion":"RE","Romania":"RO","Russia":"RS","Rwanda":"RW","Saint Barthelemy":"TB","Saint Helena":"SH","Saint Kitts and Nevis":"SC","Saint Lucia":"ST","Saint Martin":"RN","Saint Pierre and Miquelon":"SB","Saint Vincent and the Grenadines":"VC","Samoa":"WS","San Marino":"SM","Sao Tome and Principe":"TP","Saudi Arabia":"SA","Senegal":"SG","Serbia":"RI","Serbia and Montenegro":"YI","Seychelles":"SE","Sierra Leone":"SL","Singapore":"SN","Sint Maarten":"NN","Slovakia":"LO","Slovenia":"SI","Solomon Islands":"BP","Somalia":"SO","South Africa":"SF","South Georgia and the South Sandwich Islands":"SX","South Korea":"KS","South Sudan":"OD","Spain":"SP","Sri Lanka":"CE","Sudan":"SU","Suriname":"NS","Svalbard and Jan Mayen":"SV","Sweden":"SW","Switzerland":"SZ","Syria":"SY","Taiwan":"TW","Tajikistan":"TI","Tanzania":"TZ","Thailand":"TH","The Netherlands":"NL","Timor Leste":"TT","Togo":"TO","Tokelau":"TL","Tonga":"TN","Trinidad and Tobago":"TD","Tunisia":"TS","Turkey":"TU","Turkmenistan":"TX","Turks and Caicos Islands":"TK","Tuvalu":"TV","Uganda":"UG","Ukraine":"UP","United Arab Emirates":"AE","United Kingdom":"UK","United States":"US","United States Minor Outlying Islands":"\N","Uruguay":"UY","U.S. Virgin Islands":"VQ","Uzbekistan":"UZ","Vanuatu":"NH","Vatican":"VT","Venezuela":"VE","Vietnam":"VM","Wallis and Futuna":"WF","Western Sahara":"WI","Yemen":"YM","Zambia":"ZA","Zimbabwe":"ZI"}
+
+let counterValue = 1;
+
+// Fetch the JSON file
+function fetchData() {
+
+var random, file, jsonFileUrl, countryCode, countryName, imgUrl;
+
+do {
+  random = Math.floor(Math.random() * files.length);
+  file = files[random];
+  countryCode = file.substring(file.indexOf('/') + 1, file.indexOf('.'));
+  countryName = Object.keys(codes).find(key => codes[key] === countryCode.toUpperCase());
+} while (!countryName);
+
+jsonFileUrl = 'https://raw.githubusercontent.com/factbook/factbook.json/master/' + file;
+imgUrl = 'img/fips/' + countryCode + '.png';
+
+
+return fetch(jsonFileUrl)
+.then(response => response.json())
+.then(jsonObject => {
+
+// get file contents
+const geographicCoordinatesText = jsonObject.Geography?.['Geographic coordinates']?.text.replace(/<[^>]*>/g, '');
+const locationText = jsonObject.Geography?.['Location']?.text.replace(/<[^>]*>/g, '');
+const comparisonText = jsonObject.Geography?.['Area - comparative']?.text.replace(/<[^>]*>/g, '');
+
+// random key
+function getAllKeys(obj) {
+    let keys = [];
+    for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+            keys = keys.concat(getAllKeys(obj[key]).map(subKey => `${key}.${subKey}`));
+        } else {
+            keys.push(key);
+        }
+    }
+    return keys;
+}
+
+// find matching keys
+function getKeysAndValuesWithSameFirstTwoParts(obj, selectedKey) {
+    // Split the selected key by '.'
+    const keyParts = selectedKey.split('.');
+
+    // Extract the first and second parts
+    const [firstPart, secondPart] = keyParts;
+
+    // Find all keys and values with the same first and second parts
+    const matchingKeysAndValues = getAllKeys(obj)
+        .filter(key => {
+            const parts = key.split('.');
+            return parts.length >= 2 && parts[0] === firstPart && parts[1] === secondPart;
+        })
+        .map(key => ({
+            key,
+            value: key.split('.').reduce((acc, key) => acc[key], obj)
+        }));
+
+    return matchingKeysAndValues;
+}
+
+// Get all keys of the JSON object, including nested keys
+const allKeys = getAllKeys(jsonObject);
+// Define a wildcard pattern to exclude specific keys (replace with your pattern)
+const excludeWildcard = /note/;
+// Get all keys of the JSON object, excluding keys with the specified wildcard
+const filteredKeys = getAllKeys(jsonObject, excludeWildcard);
+// Select a random key
+const randomKey = filteredKeys[Math.floor(Math.random() * filteredKeys.length)];
+// find matching keys
+const matchingKeysAndValues = getKeysAndValuesWithSameFirstTwoParts(jsonObject, randomKey);
+// Split the random key by '.'
+const keyParts = randomKey.split('.');
+
+// start div
+const div = document.createElement('div');
+resultContainer.appendChild(div);
+div.classList.add(`flex-column`);
+
+if (counterValue !== 1 && !(counterValue === 2 && window.innerWidth > 768)) {
+  div.innerHTML += `<hr>`;
+}
+
+// Add title
+contentToAppend = `<div class="part-1">${counterValue}.</div><div class="part-2">${keyParts[0]}</div><div class="part-1" style="margin-bottom:20px">${keyParts[1]} ~ ${countryName}</div>`;
+div.innerHTML += contentToAppend;
+
+counterValue += 1;
+
+// Add content
+matchingKeysAndValues.forEach((item) => {
+  const itemParts = item.key.split('.');
+  const remainingParts = itemParts.slice(2).join('.');
+  if (remainingParts !== 'text') {
+    contentToAppend = `<p style="font-size:12px; font-weight:600; margin-top:5px;">${remainingParts.replace(/text/g, '').replace(/\./g, '')}</p><p>${item.value.replace(/<strong>note:\s*<\/strong>/g, '').replace(/<strong>note\s*<\/strong>:/g, '')}</p>`;
+    div.innerHTML += contentToAppend;
+  } else {
+    contentToAppend = `<p>${item.value.replace(/<strong>note:\s*<\/strong>/g, '').replace(/<strong>note\s*<\/strong>:/g, '')}</p>`;
+    div.innerHTML += contentToAppend;
+  }
+});
+
+// add caption
+contentToAppend = `<img class="image" src="${imgUrl}"></div><div class="part-3" style="font-weight:600">${geographicCoordinatesText}</div><div class="part-3"><span>${locationText}</span> ~ <span style="font-style:italic">${comparisonText}</span></div>`;
+div.innerHTML += contentToAppend;
+
+})} <!-- end fetch function -->
+
+const numberOfFetches = 10;
+for (let i = 0; i < numberOfFetches; i++) {
+  fetchData();
+}
+
+</script>
+
+<!-- close menu -->
+<script>
+document.querySelector('.menu-icon').addEventListener('click', function () {
+document.querySelector('nav').classList.toggle('show');
+});
+function closeMenu() {
+document.querySelector('nav').classList.remove('show');
+}
+</script>
+
+<!-- scroll to section with offset -->
+<script>
+function scrollToSection(sectionId) {
+const targetSection = document.getElementById(sectionId);
+const offset = 50;
+
+if (targetSection) {
+window.scrollTo({
+top: targetSection.offsetTop - offset,
+behavior: 'smooth'
+});
+}
+event.preventDefault();
+closeMenu();
+}
+</script>
+
+</body>
+</html>
