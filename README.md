@@ -1,6 +1,6 @@
 # svgeo
 
-Library of readymade maps in svg format for designers and developers.
+Library of svg basemaps -- for designers and developers.
 
 ## Downloads
 
